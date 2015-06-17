@@ -1,12 +1,14 @@
-#### requirement
+####1 requirement
 
 ```
 install -y python-setuptools
 easy_install pip
 pip install IPy
 yum install vixie-cron crontabs -y
+```
 
-### timing tasks
+####2 timing tasks
+```
 crontab -l
 crontab -e
 
