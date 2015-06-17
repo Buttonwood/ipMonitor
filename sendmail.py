@@ -67,7 +67,7 @@ class Mail(object):
     def setMail(self,mail):
         amail = Mailsender()
         amail.setSmtpServer(mail.get('SMTP','smtp.163.com'))
-        amail.setSender(mail.get('SENDER','peony_wh@163.com'),mail.get('USER','peony_wh'),mail.get('PASSWD','peony2014'))
+        amail.setSender(mail.get('SENDER','peony_wh@163.com'),mail.get('USER','*******'),mail.get('PASSWD','*****'))
         amail.setReceiver(mail.get('MAILS',["tanhao2013@foxmail.com","tanhao2013@msn.cn"]))
         host_info = " From Your Host {0}|{1} ".format(get_hostname(),get_local_ip())
         amail.setSubject(mail.get('SUBJECT','A Testing Mail By ADMIN!') + host_info)
@@ -87,7 +87,7 @@ def test():
     receiverList = ["tanhao2013@foxmail.com","tanhao2013@msn.cn"]
     mail = Mailsender()
     mail.setSmtpServer("smtp.163.com")
-    mail.setSender("peony_wh@163.com","peony_wh","peony2014")
+    mail.setSender("peony_wh@163.com","*******","******")
     mail.setReceiver(receiverList)
     mail.setSubject("This is a test mail!")
     mail.setText("Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org")
