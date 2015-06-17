@@ -12,8 +12,8 @@
 from helper import u_to_s,get_hostname,get_local_ip
 import smtplib
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart  
-from email.mime.image import MIMEImage  
+from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 import base64
 
 class Mailsender():
@@ -43,14 +43,14 @@ class Mailsender():
     def sendMail(self):
         smtp = smtplib.SMTP()
         smtp.connect(self.smtpserver)
-        smtp.login(self.username, self.password)  
+        smtp.login(self.username, self.password)
         msg  = MIMEMultipart('alternative')
         msg['From'] = self.sender
         msg['To']   = ",".join(self.receiver)
         msg['Subject'] = self.subject
-        part1 = MIMEText(self.text, 'plain')  
-        part2 = MIMEText(self.html, 'html')  
-        msg.attach(part1)  
+        part1 = MIMEText(self.text, 'plain')
+        part2 = MIMEText(self.html, 'html')
+        msg.attach(part1)
         msg.attach(part2)
         smtp.sendmail(self.sender, self.receiver, msg.as_string())
         smtp.quit()
@@ -63,41 +63,41 @@ class Mail(object):
     def __init__(self, arg):
         super(Mail, self).__init__()
         self.mail = self.setMail(arg)
-    
+
     def setMail(self,mail):
         amail = Mailsender()
         amail.setSmtpServer(mail.get('SMTP','smtp.163.com'))
-        amail.setSender(mail.get('SENDER','peony_wh@163.com'),mail.get('USER','peony_wh'),mail.get('PASSWD','peony2014'))
+        amail.setSender(mail.get('SENDER','12345678@163.com'),mail.get('USER','12345678'),mail.get('PASSWD','123456782014'))
         amail.setReceiver(mail.get('MAILS',["tanhao2013@foxmail.com","tanhao2013@msn.cn"]))
         host_info = " From Your Host {0}|{1} ".format(get_hostname(),get_local_ip())
         amail.setSubject(mail.get('SUBJECT','A Testing Mail By ADMIN!') + host_info)
         amail.setText(host_info)
         return amail
 
-    def setText(self,text): 
+    def setText(self,text):
         self.mail.setText(text)
 
-    def setHtml(self,html): 
+    def setHtml(self,html):
         self.mail.setHtml(html)
 
-    def sendMail(self):   
-        self.mail.sendMail()   
+    def sendMail(self):
+        self.mail.sendMail()
 
 def test():
     receiverList = ["tanhao2013@foxmail.com","tanhao2013@msn.cn"]
     mail = Mailsender()
     mail.setSmtpServer("smtp.163.com")
-    mail.setSender("peony_wh@163.com","peony_wh","peony2014")
+    mail.setSender("12345678@163.com","12345678","123456782014")
     mail.setReceiver(receiverList)
     mail.setSubject("This is a test mail!")
     mail.setText("Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org")
-    mail.setHtml(""" 
-<html> 
-  <head></head> 
-  <body> 
-    <p>Hi!<br> 
-       How are you?<br> 
-       Here is the <a href="http://www.python.org">link</a> you wanted. 
+    mail.setHtml("""
+<html>
+  <head></head>
+  <body>
+    <p>Hi!<br>
+       How are you?<br>
+       Here is the <a href="http://www.python.org">link</a> you wanted.
     </p>
     <table border="1">
       <tr>
@@ -110,9 +110,9 @@ def test():
         <td>mmm</td>
         <td>$100</td>
       </tr>
-    </table> 
-  </body> 
-</html>  
+    </table>
+  </body>
+</html>
 """ )
     mail.sendMail()
 
@@ -121,13 +121,13 @@ def main():
     import config
     tmail = Mail(config.mail)
     tmail.setText("Hi!\nHow are you?\nHere is the link you wanted:\nhttp://www.python.org")
-    tmail.setHtml(""" 
-<html> 
-  <head></head> 
-  <body> 
-    <p>Hi!<br> 
-       How are you?<br> 
-       Here is the <a href="http://www.python.org">link</a> you wanted. 
+    tmail.setHtml("""
+<html>
+  <head></head>
+  <body>
+    <p>Hi!<br>
+       How are you?<br>
+       Here is the <a href="http://www.python.org">link</a> you wanted.
     </p>
     <table border="1">
       <tr>
@@ -140,9 +140,9 @@ def main():
         <td>mmm</td>
         <td>$100</td>
       </tr>
-    </table> 
-  </body> 
-</html>  
+    </table>
+  </body>
+</html>
 """ )
     tmail.sendMail()
 

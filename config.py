@@ -5,9 +5,9 @@
 mail = {
 	"MAILS"	 : ["tanhao2013@foxmail.com","tanhao2013@me.com"],
 	"SMTP"   : "smtp.163.com",
-	"SENDER" : "peony_wh@163.com",
-	"USER"   : "peony_wh",
-	"PASSWD" : "peony2014",
+	"SENDER" : "12345678_wh@163.com",
+	"USER"   : "12345678_wh",
+	"PASSWD" : "123456782014",
 	"SUBJECT": "Network Flux Monitor"
 }
 
