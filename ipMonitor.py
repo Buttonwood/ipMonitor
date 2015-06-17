@@ -5,7 +5,7 @@ import subprocess
 import config
 import helper
 import iptools
-import time
+#import time
 from logger import Logger
 from sendmail import Mail
 
@@ -16,15 +16,16 @@ class ipMonitor(object):
         self.logger   = Logger('ipMonitor', 'ipMonitor.log')
 
     def start(self):
-        agap = random.randint(40,220)
-        acmd  = "/usr/sbin/iftop -nNpPts %d >iftop.log" % random.randint(40,220)
+        agap = random.randint(10,250)
+        acmd  = "/usr/sbin/iftop -nNpPts %d >iftop.log" % agap
         self.logger.info(acmd)
         subprocess.call(acmd,shell=True)
-        return agap
+        #return agap
 
     def job(self,net):
-        agap = int(self.start()) + 65
+        #agap = int(self.start()) + 65
         #time.sleep(agap)
+        self.start()
         fh = open("iftop.log")
         line = fh.readline()
         msg = ""
@@ -69,8 +70,7 @@ class ipMonitor(object):
             if "Peak rate" in line:
                 PSE,PRE,PTT =  line.split()[-3::]
                 if any((iptools.net_check(PSE,net['PSE']),iptools.net_check(PRE,net['PRE']),iptools.net_check(PTT,net['PTT']))):
-                    msg += "Peak rate （sent|received|total）is " + PSE + "|" + PRE + "|"+ PTT + "/s.\n"
-                    atmp = "{0}\'s peak rate (sent|received|total) is is {1}|{2}|{3}/s and cutoff is {4}|{5}|{6} Mb/s in last 40s;".format(self.hostname,PSE,PRE,PTT,net['PSE'],net['PRE'],net['PTT'])
+                    atmp = "{0}\'s peak rate (sent|received|total) is is {1}|{2}|{3}/s and cutoff is {4}Mb/s|{5}Mb/s|{6}Mb/s in last 40s;".format(self.hostname,PSE,PRE,PTT,net['PSE'],net['PRE'],net['PTT'])
                     self.logger.info(atmp)
                     msg += atmp
             line = fh.readline()
@@ -79,7 +79,7 @@ class ipMonitor(object):
 
 def makeHtml(msg):
     html = ""
-    for line in msg.split(";"):
+    for line in msg.split(";")[0:-1]:
         html += """
         <p>
             {0}
